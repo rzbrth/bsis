@@ -103,6 +103,7 @@ $(document).ready(function() {
             <div>
               <input type="hidden" name="id" value="${requestType.id}" />
               <input type="text" name="requestType" value="${requestType.requestType}" />
+              Bulk Transfer
              <c:choose>
       			<c:when test="${requestType.bulkTransfer eq true}"><input type="checkbox" name="bulkTransfer" checked="checked"/></c:when>
 				<c:otherwise><input type="checkbox" name="bulkTransfer"/></c:otherwise>
