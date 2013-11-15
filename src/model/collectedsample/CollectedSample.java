@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import model.bloodbagtype.BloodBagType;
 import model.bloodtesting.BloodTestResult;
 import model.bloodtesting.TTIStatus;
+import model.bloodtesting.TestBatch;
 import model.collectionbatch.CollectionBatch;
 import model.donationtype.DonationType;
 import model.donor.Donor;
@@ -44,7 +45,6 @@ import constraintvalidator.CollectionBatchExists;
 import constraintvalidator.DonationTypeExists;
 import constraintvalidator.DonorExists;
 import constraintvalidator.LocationExists;
-
 import repository.bloodtesting.BloodTypingStatus;
 
 /**
@@ -167,6 +167,9 @@ public class CollectedSample implements ModificationTracker, Comparable<Collecte
   @Column(length=11)
   private Integer donorPulse;
 
+  @ManyToOne(optional=true)
+  private TestBatch testBatch;
+  
   public CollectedSample() {
     modificationTracker = new RowModificationTracker();
     worksheets = new HashSet<Worksheet>();
@@ -446,6 +449,14 @@ public class CollectedSample implements ModificationTracker, Comparable<Collecte
 
 	public void setDonorPulse(Integer donorPulse) {
 		this.donorPulse = donorPulse;
+	}
+
+	public TestBatch getTestBatch() {
+		return testBatch;
+	}
+
+	public void setTestBatch(TestBatch testBatch) {
+		this.testBatch = testBatch;
 	}
   
 }

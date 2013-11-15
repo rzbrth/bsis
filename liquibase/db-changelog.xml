@@ -200,5 +200,58 @@
 	        <column name="bulkTransfer" type="TINYINT(1)"/>
 	    </addColumn>
 	</changeSet>
-    
+	
+	<!-- For issue 105 [Create testBatch table]  -->
+    <changeSet id="201311122005" author="nikita">
+    <createTable tableName="testBatch">
+    	<column name="id" type="smallint(6)" autoIncrement="true">
+    		<constraints primaryKey="true" nullable="false"/>
+    	</column>
+    	<column name="batchNumber" type="varchar(20)"></column>
+    	<column name="isDeleted" type="tinyint(1)"></column>
+    	<column name="createdDate" type="timestamp"></column>
+    	<column name="lastUpdated" type="timestamp"></column>
+    	<column name="notes" type="longtext"></column>
+    	<column name="status" type="varchar(20)"></column>
+    	<column name="createdBy_id" type="smallint(6)"></column>
+    	<column name="lastUpdatedBy_id" type="smallint(6)"></column>
+    </createTable>
+    </changeSet>
+    <changeSet id="201311131239" author="nikita">
+	    <addColumn tableName="collectedsample">
+	    	<column name="testBatch_id" type="smallint(6)"></column>
+	    </addColumn>
+	    <addForeignKeyConstraint constraintName="testBatch_id_FK" 
+	    						 referencedTableName="testBatch" 
+	    						 baseColumnNames="testBatch_id" 
+	    						 baseTableName="collectedsample" 
+	    						 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="201311130633" author="nikita">
+     <addColumn tableName="collectedsample_aud">
+	    	<column name="testBatch_id" type="smallint(6)"></column>
+	    </addColumn>
+	    <addForeignKeyConstraint constraintName="testBatch_id_aud_FK" 
+	    						 referencedTableName="testBatch" 
+	    						 baseColumnNames="testBatch_id" 
+	    						 baseTableName="collectedsample_aud" 
+	    						 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="201311130733" author="nikita">
+    <createTable tableName="testBatch_aud">
+    	<column name="id" type="smallint(6)" autoIncrement="true">
+    		<constraints primaryKey="true" nullable="false"/>
+    	</column>
+    	<column name="batchNumber" type="varchar(20)"></column>
+    	<column name="isDeleted" type="tinyint(1)"></column>
+    	<column name="createdDate" type="timestamp"></column>
+    	<column name="lastUpdated" type="timestamp"></column>
+    	<column name="notes" type="longtext"></column>
+    	<column name="status" type="varchar(20)"></column>
+    	<column name="createdBy_id" type="smallint(6)"></column>
+    	<column name="lastUpdatedBy_id" type="smallint(6)"></column>
+    	<column name="REV" type="int(11)"></column>
+    	<column name="REVTYPE" type="tinyint(4)"></column>
+    </createTable>
+    </changeSet>
 </databaseChangeLog>	

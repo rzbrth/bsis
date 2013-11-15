@@ -12,14 +12,14 @@
 <c:set var="tabContentId">tabContent-${unique_page_id}</c:set>
 <c:set var="mainContentId">mainContent-${unique_page_id}</c:set>
 <c:set var="childContentId">childContent-${unique_page_id}</c:set>
-<c:set var="table_id">collectionsTable-${unique_page_id}</c:set>
-<c:set var="collectionsTableEditRowDivId">collectionsTableEditRowDiv-${unique_page_id}</c:set>
+<c:set var="table_id">testBatchTable-${unique_page_id}</c:set>
 <c:set var="noResultsFoundDivId">noResultsFoundDiv-${unique_page_id}</c:set>
 
 <script>
 $(document).ready(
     function() {
-      var collectionsTable = $("#${table_id}").dataTable({
+alert("HI");
+      var testBatchTable = $("#${table_id}").dataTable({
         "bJQueryUI" : true,
         "sDom" : '<"H"lrT>t<"F"ip>',
         "bServerSide" : true,
@@ -83,7 +83,7 @@ $(document).ready(
         });
       }
 
-      $("#${mainContentId}").find(".collectionsTable").bind("refreshResults", refreshResults);
+      $("#${mainContentId}").find(".testBatchTable").bind("refreshResults", refreshResults);
 
       $("#${table_id}_filter").find("label").find("input").keyup(function() {
         var searchBox = $("#${table_id}_filter").find("label").find("input");
@@ -92,69 +92,14 @@ $(document).ready(
           $("#${table_id}").find("td").highlight(searchBox.val());
       });
 
-      $("#${mainContentId}").find(".saveToWorksheetFormToggle").button({
-        icons: {
-          primary: "ui-icon-plusthick"
-        }
-      }).click(toggleSaveToWorksheetFormDiv);
 
-      $("#${mainContentId}").find(".cancelSaveToWorksheetButton").button().click(toggleSaveToWorksheetFormDiv);
-
-      function toggleSaveToWorksheetFormDiv() {
-        var saveToWorksheetFormDiv = $("#${mainContentId}").find(".saveToWorksheetFormDiv");
-        if (saveToWorksheetFormDiv.is(":visible"))
-          $("#${mainContentId}").find(".saveToWorksheetFormToggle")
-                                .button("option", {icons: {primary: 'ui-icon-plusthick'}});
-        else
-          $("#${mainContentId}").find(".saveToWorksheetFormToggle")
-                                .button("option", {icons: {primary: 'ui-icon-minusthick'}});
-        saveToWorksheetFormDiv.toggle("fast");
-      }
-
-      function hideSaveToWorksheetFormDiv() {
-        $("#${mainContentId}").find(".saveToWorksheetFormDiv").hide();
-      }
-
-      function showSaveToWorksheetFormDiv() {
-        $("#${mainContentId}").find(".saveToWorksheetFormDiv").show();
-      }
-
-      function getWorksheetBatchIdInput() {
-        var worksheetForm = $("#${mainContentId}").find(".saveToWorksheetForm");
-        return worksheetForm.find('input[name="worksheetNumber"]').val()
-      }
-      
-      $("#${mainContentId}").find(".saveToWorksheetButton").button().click(
-          function() {
-            hideSaveToWorksheetFormDiv();
-            $.ajax({
-              url: "${model.saveToWorksheetUrl}",
-              data: {worksheetNumber: getWorksheetBatchIdInput()},
-              type: "GET",
-              success: function(response) {
-                         showSaveToWorksheetFormDiv();
-                         var worksheetResult = $("#${mainContentId}").find(".saveWorksheetResult");
-                         worksheetResult.html(response);
-                         showMessage("Successfully saved collections to worksheet.");
-                       },
-              error:   function (response) {
-                         showSaveToWorksheetFormDiv();
-                         var worksheetResult = $("#${mainContentId}").find(".saveWorksheetResult");
-                         worksheetResult.html(response.responseText);
-                         showErrorMessage("Something went wrong when trying to generate worksheet.");                
-                       }
-            });
-          });
-
-      // hide the save as worksheet form for the first time
-      hideSaveToWorksheetFormDiv();
     });
 </script>
 
 <div id="${tabContentId}">
 
   <div id="${mainContentId}">
-
+*************** ${fn:length(model.allCollections)}
     <c:choose>
 
       <c:when test="${fn:length(model.allCollections) eq -1}">
@@ -166,46 +111,27 @@ $(document).ready(
       <c:otherwise>
   
         <br />
-        <div>
-          <button class="saveToWorksheetFormToggle">Save collections to worksheet</button>
-        </div>
-          <div class="saveToWorksheetFormDiv">
-            <div class="formDiv">
-              <b>Save Collections to worksheet</b>
-              <form class="saveToWorksheetForm">
-                <div>
-                  <label> Worksheet Number </label>
-                  <input name="worksheetNumber" />
-                </div>
-              </form>
-              <div>
-                <button class="saveToWorksheetButton">Save</button>
-                <button class="cancelSaveToWorksheetButton">Cancel</button>
-              </div>
-              <div class="saveWorksheetResult">
-              </div>
-            </div>
-          </div>
-        <br />
-  
-        <table id="${table_id}" class="dataTable collectionsTable">
+          <table id="${table_id}" class="dataTable testBatchTable">
           <thead>
             <tr>
               <th style="display: none"></th>
               <c:if test="${model.collectedSampleFields.collectionNumber.hidden != true}">
                 <th>${model.collectedSampleFields.collectionNumber.displayName}</th>
               </c:if>
-              <c:if test="${model.collectedSampleFields.collectedOn.hidden != true}">
-                <th>${model.collectedSampleFields.collectedOn.displayName}</th>
+              <c:if test="${model.collectedSampleFields.ttiStatus.hidden != true}">
+                <th>${model.collectedSampleFields.ttiStatus.displayName}</th>
               </c:if>
-              <c:if test="${model.collectedSampleFields.bloodBagType.hidden != true}">
-                <th>${model.collectedSampleFields.bloodBagType.displayName}</th>
+              <c:if test="${model.collectedSampleFields.bloodTypingStatus.hidden != true}">
+                <th>${model.collectedSampleFields.bloodTypingStatus.displayName}</th>
               </c:if>
-              <c:if test="${model.collectedSampleFields.collectionCenter.hidden != true}">
-                <th>${model.collectedSampleFields.collectionCenter.displayName}</th>
+              <c:if test="${model.collectedSampleFields.bloodAbo.hidden != true}">
+                <th>${model.collectedSampleFields.bloodAbo.displayName}</th>
               </c:if>
-              <c:if test="${model.collectedSampleFields.collectionSite.hidden != true}">
-                <th>${model.collectedSampleFields.collectionSite.displayName}</th>
+              <c:if test="${model.collectedSampleFields.bloodRh.hidden != true}">
+                <th>${model.collectedSampleFields.bloodRh.displayName}</th>
+              </c:if>
+              <c:if test="${model.collectedSampleFields.donor.hidden != true}">
+                <th>${model.collectedSampleFields.donor.donorStatus.displayName}</th>
               </c:if>
             </tr>
           </thead>
@@ -216,17 +142,20 @@ $(document).ready(
                 <c:if test="${model.collectedSampleFields.collectionNumber.hidden != true}">
                   <td>${collection.collectionNumber}</td>
                 </c:if>
-                <c:if test="${model.collectedSampleFields.collectedOn.hidden != true}">
-                  <td>${collection.collectedOn}</td>
+                <c:if test="${model.collectedSampleFields.ttiStatus.hidden != true}">
+                  <td>${collection.ttiStatus}</td>
                 </c:if>
-                <c:if test="${model.collectedSampleFields.bloodBagType.hidden != true}">
-                  <td>${collection.bloodBagType.bloodBagType}</td>
+                <c:if test="${model.collectedSampleFields.bloodTypingStatus.hidden != true}">
+                  <td>${collection.bloodTypingStatus}</td>
                 </c:if>
-                <c:if test="${model.collectedSampleFields.collectionCenter.hidden != true}">
-                  <td>${collection.collectionCenter}</td>
+                <c:if test="${model.collectedSampleFields.bloodAbo.hidden != true}">
+                  <td>${collection.bloodAbo}</td>
                 </c:if>
-                <c:if test="${model.collectedSampleFields.collectionSite.hidden != true}">
-                  <td>${collection.collectionSite}</td>
+                <c:if test="${model.collectedSampleFields.bloodRh.hidden != true}">
+                  <td>${collection.bloodRh}</td>
+                </c:if>
+                 <c:if test="${model.collectedSampleFields.donor.hidden != true}">
+                  <td>${collection.donor.donorStatus}</td>
                 </c:if>
               </tr>
             </c:forEach>

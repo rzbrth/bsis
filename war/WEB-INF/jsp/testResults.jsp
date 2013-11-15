@@ -37,7 +37,9 @@
         <a href="worksheetForTestResultsFormGenerator.html">Worksheets</a>
       </li>
     </c:if>
-
+	<li id="testBatches">
+      <a href="findAndAddTestBatchFormGenerator.html">Test Batches</a>
+    </li>
   </ul>
 
 </div>
