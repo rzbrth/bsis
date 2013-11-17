@@ -193,17 +193,17 @@
 	
 	<!-- For issue 102 [Add Request Type 'Bulk Transfer' Flag] -->
 	<changeSet id="201311081617" author="devang">
-	    <addColumn tableName="requesttype">
+	    <addColumn tableName="RequestType">
 	        <column name="bulkTransfer" type="TINYINT(1)"/>
 	    </addColumn>
-		<addColumn tableName="requesttype_aud">
+		<addColumn tableName="RequestType_aud">
 	        <column name="bulkTransfer" type="TINYINT(1)"/>
 	    </addColumn>
 	</changeSet>
 	
 	<!-- For issue 105 [Create testBatch table]  -->
     <changeSet id="201311122005" author="nikita">
-    <createTable tableName="testBatch">
+    <createTable tableName="TestBatch">
     	<column name="id" type="smallint(6)" autoIncrement="true">
     		<constraints primaryKey="true" nullable="false"/>
     	</column>
@@ -218,27 +218,27 @@
     </createTable>
     </changeSet>
     <changeSet id="201311131239" author="nikita">
-	    <addColumn tableName="collectedsample">
+	    <addColumn tableName="CollectedSample">
 	    	<column name="testBatch_id" type="smallint(6)"></column>
 	    </addColumn>
 	    <addForeignKeyConstraint constraintName="testBatch_id_FK" 
-	    						 referencedTableName="testBatch" 
+	    						 referencedTableName="TestBatch" 
 	    						 baseColumnNames="testBatch_id" 
-	    						 baseTableName="collectedsample" 
+	    						 baseTableName="CollectedSample" 
 	    						 referencedColumnNames="id"/>
     </changeSet>
     <changeSet id="201311130633" author="nikita">
-     <addColumn tableName="collectedsample_aud">
+     <addColumn tableName="CollectedSample_AUD">
 	    	<column name="testBatch_id" type="smallint(6)"></column>
 	    </addColumn>
 	    <addForeignKeyConstraint constraintName="testBatch_id_aud_FK" 
-	    						 referencedTableName="testBatch" 
+	    						 referencedTableName="TestBatch" 
 	    						 baseColumnNames="testBatch_id" 
-	    						 baseTableName="collectedsample_aud" 
+	    						 baseTableName="CollectedSample_AUD" 
 	    						 referencedColumnNames="id"/>
     </changeSet>
     <changeSet id="201311130733" author="nikita">
-    <createTable tableName="testBatch_aud">
+    <createTable tableName="TestBatch_AUD">
     	<column name="id" type="smallint(6)" autoIncrement="true">
     		<constraints primaryKey="true" nullable="false"/>
     	</column>
