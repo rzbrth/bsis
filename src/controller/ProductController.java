@@ -52,6 +52,7 @@ import backingform.ProductCombinationBackingForm;
 import backingform.RecordProductBackingForm;
 import backingform.validator.ProductBackingFormValidator;
 
+
 @Controller
 public class ProductController {
 
@@ -818,7 +819,7 @@ public class ProductController {
       if(collectionNumber.contains("-")){
       	collectionNumber = collectionNumber.split("-")[0];
       }
-      String sortName = productType2.getProductTypeNameShort();
+      String sortName = productType2.getProductTypeCode();
       int noOfUnits = form.getNoOfUnits();
       //long hiddenCollectedSampleID =Long.parseLong(request.getParameter("hiddenCollectedSampleID"));
       long collectedSampleID = form.getCollectedSampleID();
