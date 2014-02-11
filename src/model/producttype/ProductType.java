@@ -109,6 +109,14 @@ public class ProductType {
   public void setProductTypeCode(String productTypeCode) {
     this.productTypeCode = productTypeCode;
   }
+  
+  public String getProductTypeNameShort() {
+	    return productTypeCode;
+  }
+
+  public void setProductTypeNameShort(String productTypeNameShort) {
+    this.productTypeCode = productTypeNameShort;
+  }
 
   public ProductTypeTimeUnits getExpiresAfterUnits() {
     return expiresAfterUnits;
